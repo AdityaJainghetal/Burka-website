@@ -168,22 +168,7 @@ const AccountDetails = ({ user }) => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={6}>
-                    <Card className="border-0 shadow-sm">
-                        <Card.Body>
-                            <h5 className="mb-3">Profile Picture</h5>
-                            <div className="text-center mb-3">
-                                <div className="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style={{width: '120px', height: '120px'}}>
-                                    <Person size={48} className="text-success" />
-                                </div>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <Button variant="outline-success" className="me-2">Upload New</Button>
-                                <Button variant="outline-danger">Remove</Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
+               
             </Row>
         </div>
     );
