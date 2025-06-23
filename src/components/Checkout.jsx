@@ -27,37 +27,32 @@
 //   const dispatch = useDispatch();
 //   const [isLoading, setIsLoading] = useState(false);
 //   const cartItems = useSelector((state) => state.mycart.cart);
-//     const [user, setUser] = useState(null);
-   
-//     // console.log(user.user.discount,'aaaaaaaaaaaaaaaaadasasd')
-//     useEffect(() => {
-//       const storedUser = JSON.parse(localStorage.getItem("user"));
-//       if (storedUser) {
-//         setUser(storedUser);
-//       }
-//     }, []);
+//   const [user, setUser] = useState(null);
+  
+//   useEffect(() => {
+//     const storedUser = JSON.parse(localStorage.getItem("user"));
+//     if (storedUser) {
+//       setUser(storedUser);
+//     }
+//   }, []);
 
 //   // Calculate total amount and product names
 //   const discount = user?.user?.discount || 0;
 
-// const { totalAmount, productNameString } = cartItems.reduce(
-//   (acc, item) => {
-//     const itemTotal = item.price * item.qnty;
-//     const discountedItemTotal = itemTotal - (itemTotal * discount / 100);
+//   const { totalAmount, productNameString } = cartItems.reduce(
+//     (acc, item) => {
+//       const itemTotal = item.price * item.qnty;
+//       const discountedItemTotal = itemTotal - (itemTotal * discount / 100);
 
-//     return {
-//       totalAmount: acc.totalAmount + discountedItemTotal,
-//       productNameString: acc.productNameString
-//         ? `${acc.productNameString}, ${item.name}`
-//         : item.name,
-//     };
-//   },
-//   { totalAmount: 0, productNameString: "" }
-// );
-
-// // To display the discounted total amount
-// console.log(`₹${totalAmount.toFixed(2)}`);
-
+//       return {
+//         totalAmount: acc.totalAmount + discountedItemTotal,
+//         productNameString: acc.productNameString
+//           ? `${acc.productNameString}, ${item.name}`
+//           : item.name,
+//       };
+//     },
+//     { totalAmount: 0, productNameString: "" }
+//   );
 
 //   useEffect(() => {
 //     const userDataStr = localStorage.getItem("user");
@@ -91,7 +86,7 @@
 //       order_id: data.id,
 //       handler: async (response) => {
 //         try {
-//           const verifyURL = "https://backend-1-cafd.onrender.com/paymentuser/verify"; // Adjust port
+//           const verifyURL = "https://backend-1-cafd.onrender.com/paymentuser/verify";
 //           const verifyPayload = {
 //             razorpay_order_id: response.razorpay_order_id,
 //             razorpay_payment_id: response.razorpay_payment_id,
@@ -152,13 +147,13 @@
 
 //     try {
 //       setIsLoading(true);
-//       const orderURL = "https://backend-1-cafd.onrender.com/paymentuser/orders"; // Adjust port
+//       const orderURL = "https://backend-1-cafd.onrender.com/paymentuser/orders";
 
 //       const userDataStr = localStorage.getItem("user");
 //       const userId = userDataStr ? JSON.parse(userDataStr).user?._id : "guest";
 
 //       const cartData = cartItems.map((item) => ({
-//         productId: item.id, // Maps to _id in Product model
+//         productId: item.id,
 //         name: item.name,
 //         quantity: item.qnty,
 //         price: item.price,
@@ -182,7 +177,7 @@
 
 //       const { data } = await axios.post(orderURL, payload);
 
-//       if (selectedPayment === "payment1") {
+//       if (selectedPayment === "payment1" || selectedPayment === "payment4") {
 //         initPay(data.data);
 //       } else {
 //         message.success("Order placed successfully, awaiting confirmation.");
@@ -416,6 +411,8 @@
 //                   { id: "payment1", label: "Direct Bank Transfer" },
 //                   { id: "payment2", label: "Check Payments" },
 //                   { id: "payment3", label: "Cash on Delivery" },
+//                   // New Razorpay payment option added here
+//                   { id: "payment4", label: "Online Payment (Razorpay)" },
 //                 ].map((payment) => (
 //                   <div className="payment-item" key={payment.id}>
 //                     <div className="form-check common-check common-radio py-16 mb-0">
@@ -441,6 +438,8 @@
 //                             "Make your payment directly into our bank account. Please use your Order ID as the payment reference."}
 //                           {payment.id === "payment2" && "Please send a check to our store address."}
 //                           {payment.id === "payment3" && "Pay with cash upon delivery."}
+//                           {/* Added description for new Razorpay option */}
+//                           {payment.id === "payment4" && "Secure online payment through Razorpay. You will be redirected to their payment gateway."}
 //                         </p>
 //                       </div>
 //                     )}
@@ -475,6 +474,10 @@
 // };
 
 // export default Checkout;
+
+
+
+
 
 
 import React, { useState, useEffect } from "react";
@@ -517,6 +520,7 @@ const Checkout = () => {
 
   // Calculate total amount and product names
   const discount = user?.user?.discount || 0;
+  const hasDiscount = discount !== null;
 
   const { totalAmount, productNameString } = cartItems.reduce(
     (acc, item) => {
@@ -889,8 +893,7 @@ const Checkout = () => {
                 {[
                   { id: "payment1", label: "Direct Bank Transfer" },
                   { id: "payment2", label: "Check Payments" },
-                  { id: "payment3", label: "Cash on Delivery" },
-                  // New Razorpay payment option added here
+                  { id: "payment3", label: "Cash on Delivery", disabled: hasDiscount },
                   { id: "payment4", label: "Online Payment (Razorpay)" },
                 ].map((payment) => (
                   <div className="payment-item" key={payment.id}>
@@ -902,12 +905,16 @@ const Checkout = () => {
                         id={payment.id}
                         checked={selectedPayment === payment.id}
                         onChange={handlePaymentChange}
+                        disabled={payment.disabled}
                       />
                       <label
-                        className="form-check-label fw-semibold text-neutral-600"
+                        className={`form-check-label fw-semibold ${payment.disabled ? "text-gray-400" : "text-neutral-600"}`}
                         htmlFor={payment.id}
                       >
                         {payment.label}
+                        {payment.disabled && (
+                          <span className="text-xs text-danger ms-2">(Not available)</span>
+                        )}
                       </label>
                     </div>
                     {selectedPayment === payment.id && (
@@ -917,7 +924,6 @@ const Checkout = () => {
                             "Make your payment directly into our bank account. Please use your Order ID as the payment reference."}
                           {payment.id === "payment2" && "Please send a check to our store address."}
                           {payment.id === "payment3" && "Pay with cash upon delivery."}
-                          {/* Added description for new Razorpay option */}
                           {payment.id === "payment4" && "Secure online payment through Razorpay. You will be redirected to their payment gateway."}
                         </p>
                       </div>
