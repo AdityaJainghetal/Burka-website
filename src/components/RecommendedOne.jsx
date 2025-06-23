@@ -23,7 +23,7 @@ const RecommendedOne = () => {
     }
   }, []);
 
-  const api = 'https://backend-1-cafd.onrender.com/product/allproduct';
+  const api = 'https://backend-2-pbou.onrender.com/product/allproduct';
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -55,7 +55,7 @@ const RecommendedOne = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('https://backend-1-cafd.onrender.com/category');
+        const res = await axios.get('https://backend-2-pbou.onrender.com/category');
         setCategories(res.data);
       } catch (error) {
         toast.error('Error fetching categories');
@@ -400,7 +400,7 @@ export default RecommendedOne;
 //     }
 //   }, []);
 
-//   const api = 'https://backend-1-cafd.onrender.com/product/allproduct';
+//   const api = 'https://backend-2-pbou.onrender.com/product/allproduct';
 
 //   useEffect(() => {
 //     const fetchCourses = async () => {
@@ -436,7 +436,7 @@ export default RecommendedOne;
 //   useEffect(() => {
 //     const fetchCategories = async () => {
 //       try {
-//         const res = await axios.get('https://backend-1-cafd.onrender.com/category');
+//         const res = await axios.get('https://backend-2-pbou.onrender.com/category');
 //         const data = Array.isArray(res.data) ? res.data : [];
 //         setCategories(data);
 //       } catch (error) {

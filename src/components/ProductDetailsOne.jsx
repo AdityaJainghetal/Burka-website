@@ -21,7 +21,7 @@
 //         const fetchProduct = async () => {
 //             try {
 //                 setLoading(true);
-//                 const response = await axios.get(`https://backend-1-cafd.onrender.com/product/${id}`);
+//                 const response = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
 //                 setProduct(response.data);
 //                 setLoading(false);
 //             } catch (err) {
@@ -362,7 +362,7 @@
 //         const fetchProduct = async () => {
 //             try {
 //                 setLoading(true);
-//                 const response = await axios.get(`https://backend-1-cafd.onrender.com/product/${id}`);
+//                 const response = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
 //                 setProduct(response.data);
 //                 if (response.data.size && response.data.size.length > 0) {
 //                     setSelectedSize(response.data.size[0]);
@@ -732,7 +732,7 @@ const ProductDetailsOne = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await axios.get(`https://backend-1-cafd.onrender.com/product/${id}`);
+                const response = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
                 setProduct(response.data);
                 if (response.data.size?.length > 0) {
                     setSelectedSize(response.data.size[0]);

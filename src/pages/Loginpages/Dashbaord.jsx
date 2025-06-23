@@ -28,7 +28,7 @@
 
 //       try {
 //         setIsLoading(true);
-//         const response = await axios.get(`https://backend-1-cafd.onrender.com/paymentuser/payments/${userId}`);
+//         const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
 //         setPayments(response.data.data);
 //       } catch (error) {
 //         console.error("Error fetching payments:", error);
@@ -174,7 +174,7 @@ const Dashboard = ({ user }) => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`https://backend-1-cafd.onrender.com/paymentuser/payments/${userId}`);
+        const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
         setPayments(response.data.data);
       } catch (error) {
         console.error("Error fetching payments:", error);
@@ -202,7 +202,7 @@ const Dashboard = ({ user }) => {
                   <Calendar size={24} className="text-success" />
                 </div>
                 <div>
-                  <h6 className="mb-1">Upcoming Bookings</h6>
+                  <h6 className="mb-1">All Orders</h6>
                   <h4 className="mb-0">{payments.length}</h4>
                 </div>
               </div>

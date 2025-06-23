@@ -27,7 +27,7 @@ const ProductDetailsTwo = ({courseId}) => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`https://backend-1-cafd.onrender.com/product/${id}`);
+        const res = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
         console.log(res)
         setProduct(res.data);
       } catch (err) {

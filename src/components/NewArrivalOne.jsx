@@ -14,7 +14,7 @@
 
 
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -211,7 +211,7 @@
 //     const navigate = useNavigate();
 //     const dispatch = useDispatch();
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -433,7 +433,7 @@
 //         }
 //       }, []);
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -658,7 +658,7 @@
 //         }
 //     }, []);
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -875,7 +875,7 @@
 //         }
 //     }, []);
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -1099,7 +1099,7 @@
 //         }
 //     }, []);
 
-//     const api = 'https://backend-1-cafd.onrender.com/product';
+//     const api = 'https://backend-2-pbou.onrender.com/product';
 
 //     useEffect(() => {
 //         const fetchCourses = async () => {
@@ -1337,7 +1337,7 @@ const NewArrivalOne = () => {
         }
     }, []);
 
-    const api = 'https://backend-1-cafd.onrender.com/product';
+    const api = 'https://backend-2-pbou.onrender.com/product';
 
     useEffect(() => {
         const fetchCourses = async () => {

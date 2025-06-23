@@ -79,7 +79,7 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post("https://backend-1-cafd.onrender.com/contact/add", formData);
+      const response = await axios.post("https://backend-2-pbou.onrender.com/contact/add", formData);
       setSubmitStatus({
         success: true,
         message: "Your message has been sent successfully!"

@@ -86,7 +86,7 @@
 //       order_id: data.id,
 //       handler: async (response) => {
 //         try {
-//           const verifyURL = "https://backend-1-cafd.onrender.com/paymentuser/verify";
+//           const verifyURL = "https://backend-2-pbou.onrender.com/paymentuser/verify";
 //           const verifyPayload = {
 //             razorpay_order_id: response.razorpay_order_id,
 //             razorpay_payment_id: response.razorpay_payment_id,
@@ -147,7 +147,7 @@
 
 //     try {
 //       setIsLoading(true);
-//       const orderURL = "https://backend-1-cafd.onrender.com/paymentuser/orders";
+//       const orderURL = "https://backend-2-pbou.onrender.com/paymentuser/orders";
 
 //       const userDataStr = localStorage.getItem("user");
 //       const userId = userDataStr ? JSON.parse(userDataStr).user?._id : "guest";
@@ -569,7 +569,7 @@ const Checkout = () => {
       order_id: data.id,
       handler: async (response) => {
         try {
-          const verifyURL = "https://backend-1-cafd.onrender.com/paymentuser/verify";
+          const verifyURL = "https://backend-2-pbou.onrender.com/paymentuser/verify";
           const verifyPayload = {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
@@ -630,7 +630,7 @@ const Checkout = () => {
 
     try {
       setIsLoading(true);
-      const orderURL = "https://backend-1-cafd.onrender.com/paymentuser/orders";
+      const orderURL = "https://backend-2-pbou.onrender.com/paymentuser/orders";
 
       const userDataStr = localStorage.getItem("user");
       const userId = userDataStr ? JSON.parse(userDataStr).user?._id : "guest";

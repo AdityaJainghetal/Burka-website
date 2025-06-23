@@ -73,7 +73,7 @@ const ChangePassword = () => {
       setIsLoading(true);
       
       const response = await axios.post(
-        "https://backend-1-cafd.onrender.com/user/resetpassword",
+        "https://backend-2-pbou.onrender.com/user/resetpassword",
         {
           email: resetData.email,
           oldPassword: resetData.oldPassword,

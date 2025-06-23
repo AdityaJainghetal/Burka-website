@@ -19,11 +19,11 @@
 //             amount: data.amount,
 //             currency: data.currency,
 //             description: "Test",
-//             // image: `https://backend-1-cafd.onrender.com/${myimg}`,
+//             // image: `https://backend-2-pbou.onrender.com/${myimg}`,
 //             // order_id: data.id,
 //             handler: async (response) => {
 //                 try {
-//                     const verifyURL = "https://backend-1-cafd.onrender.com/payment/verify";
+//                     const verifyURL = "https://backend-2-pbou.onrender.com/payment/verify";
 //                     await axios.post(verifyURL, response);
 //                     message.success("Payment successful!");
 //                 } catch (error) {
@@ -46,7 +46,7 @@
 
 //     const handlePay = async () => {
 //         try {
-//             const orderURL = "https://backend-1-cafd.onrender.com/payment/orders";
+//             const orderURL = "https://backend-2-pbou.onrender.com/payment/orders";
 //             const { data } = await axios.post(orderURL, {
 //                 amount: totalAmount,
 //                 productname: productName,
@@ -132,7 +132,7 @@ const CheckOut = () => {
             description: "Order Payment",
             handler: async (response) => {
                 try {
-                    const verifyURL = "https://backend-1-cafd.onrender.com/paymentuser/verify";
+                    const verifyURL = "https://backend-2-pbou.onrender.com/paymentuser/verify";
                     await axios.post(verifyURL, response);
                     message.success("Payment successful!");
 
@@ -161,7 +161,7 @@ const CheckOut = () => {
 
         try {
             setIsLoading(true);
-            const orderURL = "https://backend-1-cafd.onrender.com/paymentuser/orders";
+            const orderURL = "https://backend-2-pbou.onrender.com/paymentuser/orders";
             const { data } = await axios.post(orderURL, {
                 amount: totalAmount,
                 productname: productName,

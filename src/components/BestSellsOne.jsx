@@ -9,7 +9,7 @@ const BestSellsOne = () => {
     const [courses, setCourses] = useState([]);
     const [filterText, setFilterText] = useState('');
 
-    const api = 'https://backend-1-cafd.onrender.com/product';
+    const api = 'https://backend-2-pbou.onrender.com/product';
 
     useEffect(() => {
         const fetchCourses = async () => {
