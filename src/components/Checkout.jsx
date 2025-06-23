@@ -891,10 +891,10 @@ const Checkout = () => {
 
               <div className="mt-32">
                 {[
-                  { id: "payment1", label: "Direct Bank Transfer" },
-                  { id: "payment2", label: "Check Payments" },
+                  { id: "payment1", label: "Online Payment" },
+                  // { id: "payment2", label: "Check Payments" },
                   { id: "payment3", label: "Cash on Delivery", disabled: hasDiscount },
-                  { id: "payment4", label: "Online Payment (Razorpay)" },
+                  // { id: "payment4", label: "Online Payment (Razorpay)" },
                 ].map((payment) => (
                   <div className="payment-item" key={payment.id}>
                     <div className="form-check common-check common-radio py-16 mb-0">

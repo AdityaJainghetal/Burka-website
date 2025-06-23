@@ -163,7 +163,7 @@ const AccountDetails = ({ user }) => {
                                     <Form.Label>Phone Number</Form.Label>
                                     <Form.Control type="tel" value={phone} readOnly />
                                 </Form.Group>
-                                <Button variant="success">Update Information</Button>
+                                {/* <Button variant="success">Update Information</Button> */}
                             </Form>
                         </Card.Body>
                     </Card>

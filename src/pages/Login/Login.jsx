@@ -13,8 +13,10 @@ import HeaderOne from '../../components/HeaderOne';
 import FooterOne from '../../components/FooterOne';
 import BottomFooter from '../../components/BottomFooter';
 import { login } from '../../pages/features/auth/AuthSlice';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -214,6 +216,7 @@ const Login = () => {
 
       <FooterOne />
       <BottomFooter />
+      <ToastContainer />
     </>
   );
 };

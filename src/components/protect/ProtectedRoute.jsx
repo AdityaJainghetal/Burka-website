@@ -18,6 +18,9 @@ const ProtectedRoute = ({ children }) => {
         return navigate("/login")
     }
   }, [navigate])
+
+
+  if(!user) return null;
   
 
     return (
