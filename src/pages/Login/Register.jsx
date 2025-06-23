@@ -58,14 +58,14 @@ const Registration = () => {
               <div className="card border-0 shadow-lg rounded-3 overflow-hidden">
                 <div className="card-header bg-success text-white py-3">
                   <h2 className="card-title text-center mb-0">
-                    <i className="bi bi-building me-2"></i>Company Registration
+                    <i className="bi bi-building me-2"></i>Registration
                   </h2>
                 </div>
                 <div className="card-body p-4 bg-white">
                   <form onSubmit={formik.handleSubmit}>
                     <div className="mb-3">
                       <label htmlFor="firmName" className="form-label fw-bold">
-                        Company Name <span className="text-danger">*</span>
+                        Name <span className="text-danger">*</span>
                       </label>
                       <input
                         type="text"
