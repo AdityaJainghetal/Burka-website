@@ -136,7 +136,7 @@ const Registration = () => {
                         onBlur={formik.handleBlur}
                         value={formik.values.address}
                         rows="3"
-                        placeholder="Enter your company address with pin code"
+                        placeholder="Enter your address with pin code"
                       ></textarea>
                       {formik.touched.address && formik.errors.address && (
                         <div className="invalid-feedback">{formik.errors.address}</div>
