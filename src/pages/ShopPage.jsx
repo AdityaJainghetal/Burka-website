@@ -8,6 +8,7 @@ import FooterTwo from "../components/FooterTwo";
 import ColorInit from "../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
 import HeaderOne from "../components/HeaderOne";
+import FooterOne from "../components/FooterOne";
 
 const ShopPage = () => {
 
@@ -35,7 +36,7 @@ const ShopPage = () => {
       <ShippingTwo />
 
       {/* FooterTwo */}
-      <FooterTwo />
+      <FooterOne />
 
 
     </>
