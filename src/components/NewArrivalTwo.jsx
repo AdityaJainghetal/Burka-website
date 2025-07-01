@@ -14,16 +14,16 @@
 //       try {
 //         setLoading(true);
 //         // Fetch main course by ID
-//         const res = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
+//         const res = await axios.get(`http://localhost:8080/product/${id}`);
 //         const main = res.data;
 //         setMainCourse(main);
 
 //         // Now fetch all courses with the same category ID
 //         const sameCategoryRes = await axios.get(
-//           `https://backend-2-pbou.onrender.com/product/category/${main.category._id}`
+//           `http://localhost:8080/product/category/${main.category._id}`
 //         );
 //         const subCategoryRes = await axios.get(
-//           `https://backend-2-pbou.onrender.com/product/subcategory/${main.category._id}`
+//           `http://localhost:8080/product/subcategory/${main.category._id}`
 //         );
 //         // Filter out the main course from the list
 //         const filtered = sameCategoryRes.data.filter((course) => course._id !== main._id);
@@ -40,9 +40,6 @@
 
 //   if (loading) return <p>Loading...</p>;
 //   if (!mainCourse) return <p>Course not found</p>;
-
-
-
 
 //     function SampleNextArrow(props) {
 //         const { className, onClick } = props;
@@ -498,8 +495,6 @@
 
 // export default NewArrivalTwo
 
-
-
 // import React, { useState, useEffect } from 'react';
 // import { Link, useParams } from 'react-router-dom';
 // import Slider from 'react-slick';
@@ -516,13 +511,13 @@
 //       try {
 //         setLoading(true);
 //         // Fetch main course by ID
-//         const res = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
+//         const res = await axios.get(`http://localhost:8080/product/${id}`);
 //         const main = res.data;
 //         setMainCourse(main);
 
 //         // Now fetch all courses with the same category ID
 //         const sameCategoryRes = await axios.get(
-//             `https://backend-2-pbou.onrender.com/product/category/${main.category}`
+//             `http://localhost:8080/product/category/${main.category}`
 //         );
 //         console.log(sameCategoryRes,'sdfgn')
 //         // Filter out the main course from the list
@@ -710,12 +705,10 @@
 
 // export default NewArrivalTwo;
 
-
-
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Slider from 'react-slick';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import Slider from "react-slick";
+import axios from "axios";
 
 const NewArrivalTwo = () => {
   const { id } = useParams();
@@ -728,18 +721,20 @@ const NewArrivalTwo = () => {
       try {
         setLoading(true);
         // Fetch main product by ID
-        const res = await axios.get(`https://backend-2-pbou.onrender.com/product/${id}`);
+        const res = await axios.get(`http://localhost:8080/product/${id}`);
         const main = res.data;
         setMainProduct(main);
 
         // Now fetch all products with the same category ID
         const sameCategoryRes = await axios.get(
-          `https://backend-2-pbou.onrender.com/product/category/${main.category}`
+          `http://localhost:8080/product/category/${main.category}`
         );
-        console.log(sameCategoryRes, 'Same category products response');
+        console.log(sameCategoryRes, "Same category products response");
 
         // Filter out the main product from the list
-        const filtered = sameCategoryRes.data.filter((product) => product._id !== main._id);
+        const filtered = sameCategoryRes.data.filter(
+          (product) => product._id !== main._id
+        );
         setSameCategoryProducts(filtered);
       } catch (err) {
         console.error("Error loading product and same category data", err);
@@ -747,7 +742,7 @@ const NewArrivalTwo = () => {
         setLoading(false);
       }
     };
-    console.log(fetchProductAndSameCategory,'sdfghnm')
+    console.log(fetchProductAndSameCategory, "sdfghnm");
 
     fetchProductAndSameCategory();
   }, [id]);
@@ -759,7 +754,8 @@ const NewArrivalTwo = () => {
     const { className, onClick } = props;
     return (
       <button
-        type="button" onClick={onClick}
+        type="button"
+        onClick={onClick}
         className={` ${className} slick-next slick-arrow flex-center rounded-circle border border-gray-100 hover-border-main-600 text-xl hover-bg-main-600 hover-text-white transition-1`}
       >
         <i className="ph ph-caret-right" />
@@ -845,7 +841,6 @@ const NewArrivalTwo = () => {
             <Slider {...settings}>
               {sameCategoryProducts.map((product) => (
                 <div key={product._id}>
-
                   <div className="product-card h-100 p-8 border border-gray-100 hover-border-main-600 rounded-16 position-relative transition-2">
                     {/* Removed discountPercentage badge since it's not in schema */}
                     <Link
@@ -853,9 +848,12 @@ const NewArrivalTwo = () => {
                       className="product-card__thumb flex-center"
                     >
                       <img
-                        src={product.images[0] || "assets/images/thumbs/default-product.png"}
+                        src={
+                          product.images[0] ||
+                          "assets/images/thumbs/default-product.png"
+                        }
                         alt={product.name}
-                        style={{ height: '200px', objectFit: 'contain' }}
+                        style={{ height: "200px", objectFit: "contain" }}
                       />
                     </Link>
                     <div className="product-card__content p-sm-2">
@@ -873,14 +871,16 @@ const NewArrivalTwo = () => {
                         </span>
                         {/* Removed brand since it's not in schema */}
                         <span className="text-gray-500 text-xs">
-                          By {product.fabric || 'Unknown'}
+                          By {product.fabric || "Unknown"}
                         </span>
                       </div>
                       <div className="product-card__content mt-12">
                         <div className="product-card__price mb-8">
                           <span className="text-heading text-md fw-semibold ">
-                            ₹{product.price?.toFixed(2) || '0.00'}
-                            <span className="text-gray-500 fw-normal">/Qty</span>
+                            ₹{product.price?.toFixed(2) || "0.00"}
+                            <span className="text-gray-500 fw-normal">
+                              /Qty
+                            </span>
                           </span>
                           {/* Removed originalPrice since it's not in schema */}
                         </div>

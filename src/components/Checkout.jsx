@@ -28,7 +28,7 @@
 //   const [isLoading, setIsLoading] = useState(false);
 //   const cartItems = useSelector((state) => state.mycart.cart);
 //   const [user, setUser] = useState(null);
-  
+
 //   useEffect(() => {
 //     const storedUser = JSON.parse(localStorage.getItem("user"));
 //     if (storedUser) {
@@ -86,7 +86,7 @@
 //       order_id: data.id,
 //       handler: async (response) => {
 //         try {
-//           const verifyURL = "https://backend-2-pbou.onrender.com/paymentuser/verify";
+//           const verifyURL = "http://localhost:8080/paymentuser/verify";
 //           const verifyPayload = {
 //             razorpay_order_id: response.razorpay_order_id,
 //             razorpay_payment_id: response.razorpay_payment_id,
@@ -147,7 +147,7 @@
 
 //     try {
 //       setIsLoading(true);
-//       const orderURL = "https://backend-2-pbou.onrender.com/paymentuser/orders";
+//       const orderURL = "http://localhost:8080/paymentuser/orders";
 
 //       const userDataStr = localStorage.getItem("user");
 //       const userId = userDataStr ? JSON.parse(userDataStr).user?._id : "guest";
@@ -475,11 +475,6 @@
 
 // export default Checkout;
 
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
@@ -510,7 +505,7 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const cartItems = useSelector((state) => state.mycart.cart);
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -525,7 +520,7 @@ const Checkout = () => {
   const { totalAmount, productNameString } = cartItems.reduce(
     (acc, item) => {
       const itemTotal = item.price * item.qnty;
-      const discountedItemTotal = itemTotal - (itemTotal * discount / 100);
+      const discountedItemTotal = itemTotal - (itemTotal * discount) / 100;
 
       return {
         totalAmount: acc.totalAmount + discountedItemTotal,
@@ -569,16 +564,20 @@ const Checkout = () => {
       order_id: data.id,
       handler: async (response) => {
         try {
-          const verifyURL = "https://backend-2-pbou.onrender.com/paymentuser/verify";
+          const verifyURL = "http://localhost:8080/paymentuser/verify";
           const verifyPayload = {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           };
 
-          const { data: verificationData } = await axios.post(verifyURL, verifyPayload, {
-            headers: { "Content-Type": "application/json" },
-          });
+          const { data: verificationData } = await axios.post(
+            verifyURL,
+            verifyPayload,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
 
           if (verificationData.success) {
             message.success("Payment successful!");
@@ -592,11 +591,18 @@ const Checkout = () => {
               },
             });
           } else {
-            message.error(verificationData.message || "Payment verification failed");
+            message.error(
+              verificationData.message || "Payment verification failed"
+            );
           }
         } catch (error) {
-          console.error("Verification error:", error.response?.data || error.message);
-          message.error(error.response?.data?.message || "Payment verification failed.");
+          console.error(
+            "Verification error:",
+            error.response?.data || error.message
+          );
+          message.error(
+            error.response?.data?.message || "Payment verification failed."
+          );
         }
       },
       theme: { color: "#3399cc" },
@@ -618,7 +624,12 @@ const Checkout = () => {
       return;
     }
 
-    if (!formData.firstName || !formData.address || !formData.phone || !formData.email) {
+    if (
+      !formData.firstName ||
+      !formData.address ||
+      !formData.phone ||
+      !formData.email
+    ) {
       message.warning("Please fill in all required details.");
       return;
     }
@@ -630,7 +641,7 @@ const Checkout = () => {
 
     try {
       setIsLoading(true);
-      const orderURL = "https://backend-2-pbou.onrender.com/paymentuser/orders";
+      const orderURL = "http://localhost:8080/paymentuser/orders";
 
       const userDataStr = localStorage.getItem("user");
       const userId = userDataStr ? JSON.parse(userDataStr).user?._id : "guest";
@@ -655,7 +666,8 @@ const Checkout = () => {
         state: formData.state,
         postCode: formData.postCode,
         paymentMode: selectedPayment,
-        chequeNumber: selectedPayment === "payment2" ? formData.chequeNumber : undefined,
+        chequeNumber:
+          selectedPayment === "payment2" ? formData.chequeNumber : undefined,
       };
 
       const { data } = await axios.post(orderURL, payload);
@@ -668,7 +680,10 @@ const Checkout = () => {
       }
     } catch (error) {
       message.error(error.response?.data?.message || "Failed to create order.");
-      console.error("Order creation error:", error.response?.data || error.message);
+      console.error(
+        "Order creation error:",
+        error.response?.data || error.message
+      );
     } finally {
       setIsLoading(false);
     }
@@ -854,12 +869,18 @@ const Checkout = () => {
           <div className="col-xl-3 col-lg-4">
             <div className="checkout-sidebar">
               <div className="bg-color-three rounded-8 p-24 text-center">
-                <span className="text-gray-900 text-xl fw-semibold">Your Order</span>
+                <span className="text-gray-900 text-xl fw-semibold">
+                  Your Order
+                </span>
               </div>
               <div className="border border-gray-100 rounded-8 px-24 py-40 mt-24">
                 <div className="mb-32 pb-32 border-bottom border-gray-100 flex-between gap-8">
-                  <span className="text-gray-900 fw-medium text-xl font-heading-two">Product</span>
-                  <span className="text-gray-900 fw-medium text-xl font-heading-two">Subtotal</span>
+                  <span className="text-gray-900 fw-medium text-xl font-heading-two">
+                    Product
+                  </span>
+                  <span className="text-gray-900 fw-medium text-xl font-heading-two">
+                    Subtotal
+                  </span>
                 </div>
 
                 {cartItems.map((item, index) => (
@@ -871,20 +892,32 @@ const Checkout = () => {
                       <span className="text-gray-900 fw-normal text-md font-heading-two">
                         <i className="ph-bold ph-x" />
                       </span>
-                      <span className="text-gray-900 fw-semibold text-md font-heading-two">{item.qnty}</span>
+                      <span className="text-gray-900 fw-semibold text-md font-heading-two">
+                        {item.qnty}
+                      </span>
                     </div>
-                    <span className="text-gray-900 fw-bold text-md font-heading-two">₹{item.price * item.qnty}</span>
+                    <span className="text-gray-900 fw-bold text-md font-heading-two">
+                      ₹{item.price * item.qnty}
+                    </span>
                   </div>
                 ))}
 
                 <div className="border-top border-gray-100 pt-30 mt-30">
                   <div className="mb-32 flex-between gap-8">
-                    <span className="text-gray-900 font-heading-two text-xl fw-semibold">Subtotal</span>
-                    <span className="text-gray-900 font-heading-two text-md fw-bold">₹{totalAmount}</span>
+                    <span className="text-gray-900 font-heading-two text-xl fw-semibold">
+                      Subtotal
+                    </span>
+                    <span className="text-gray-900 font-heading-two text-md fw-bold">
+                      ₹{totalAmount}
+                    </span>
                   </div>
                   <div className="mb-0 flex-between gap-8">
-                    <span className="text-gray-900 font-heading-two text-xl fw-semibold">Total</span>
-                    <span className="text-gray-900 font-heading-two text-md fw-bold">₹{totalAmount}</span>
+                    <span className="text-gray-900 font-heading-two text-xl fw-semibold">
+                      Total
+                    </span>
+                    <span className="text-gray-900 font-heading-two text-md fw-bold">
+                      ₹{totalAmount}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -893,7 +926,11 @@ const Checkout = () => {
                 {[
                   { id: "payment1", label: "Online Payment" },
                   // { id: "payment2", label: "Check Payments" },
-                  { id: "payment3", label: "Cash on Delivery", disabled: hasDiscount },
+                  {
+                    id: "payment3",
+                    label: "Cash on Delivery",
+                    disabled: hasDiscount,
+                  },
                   // { id: "payment4", label: "Online Payment (Razorpay)" },
                 ].map((payment) => (
                   <div className="payment-item" key={payment.id}>
@@ -908,12 +945,18 @@ const Checkout = () => {
                         disabled={payment.disabled}
                       />
                       <label
-                        className={`form-check-label fw-semibold ${payment.disabled ? "text-gray-400" : "text-neutral-600"}`}
+                        className={`form-check-label fw-semibold ${
+                          payment.disabled
+                            ? "text-gray-400"
+                            : "text-neutral-600"
+                        }`}
                         htmlFor={payment.id}
                       >
                         {payment.label}
                         {payment.disabled && (
-                          <span className="text-xs text-danger ms-2">(Not available)</span>
+                          <span className="text-xs text-danger ms-2">
+                            (Not available)
+                          </span>
                         )}
                       </label>
                     </div>
@@ -922,9 +965,12 @@ const Checkout = () => {
                         <p className="text-gray-800">
                           {payment.id === "payment1" &&
                             "Make your payment directly into our bank account. Please use your Order ID as the payment reference."}
-                          {payment.id === "payment2" && "Please send a check to our store address."}
-                          {payment.id === "payment3" && "Pay with cash upon delivery."}
-                          {payment.id === "payment4" && "Secure online payment through Razorpay. You will be redirected to their payment gateway."}
+                          {payment.id === "payment2" &&
+                            "Please send a check to our store address."}
+                          {payment.id === "payment3" &&
+                            "Pay with cash upon delivery."}
+                          {payment.id === "payment4" &&
+                            "Secure online payment through Razorpay. You will be redirected to their payment gateway."}
                         </p>
                       </div>
                     )}
@@ -934,9 +980,13 @@ const Checkout = () => {
 
               <div className="mt-32 pt-32 border-top border-gray-100">
                 <p className="text-gray-500">
-                  Your personal data will be used to process your order, support your experience
-                  throughout this website, and for other purposes described in our{" "}
-                  <Link to="#" className="text-main-600 text-decoration-underline">
+                  Your personal data will be used to process your order, support
+                  your experience throughout this website, and for other
+                  purposes described in our{" "}
+                  <Link
+                    to="#"
+                    className="text-main-600 text-decoration-underline"
+                  >
                     privacy policy
                   </Link>
                   .

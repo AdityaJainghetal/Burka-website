@@ -4,7 +4,7 @@
 // const ChangePassword = () => {
 //   return (
 //     <div>
-                   
+
 //                 <div>
 //   <h3 class="account-details-heading">Change Password</h3>
 // </div>
@@ -34,33 +34,31 @@
 
 // export default ChangePassword;
 
-
-
-import React, { useState } from 'react';
-import { Card, Form, Button } from 'react-bootstrap';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { Card, Form, Button } from "react-bootstrap";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ChangePassword = () => {
   const [resetData, setResetData] = useState({
-    email: '',
-    oldPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    email: "",
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setResetData(prev => ({
+    setResetData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (resetData.newPassword !== resetData.confirmPassword) {
       toast.error("New passwords don't match!", {
         position: "top-right",
@@ -71,9 +69,9 @@ const ChangePassword = () => {
 
     try {
       setIsLoading(true);
-      
+
       const response = await axios.post(
-        "https://backend-2-pbou.onrender.com/user/resetpassword",
+        "http://localhost:8080/user/resetpassword",
         {
           email: resetData.email,
           oldPassword: resetData.oldPassword,
@@ -81,18 +79,18 @@ const ChangePassword = () => {
           confirmPassword: resetData.confirmPassword,
         }
       );
-      
+
       toast.success(response.data.message || "Password reset successfully!", {
         position: "top-right",
         autoClose: 3000,
       });
-      
+
       // Reset form after successful submission
       setResetData({
-        email: '',
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+        email: "",
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to reset password", {
@@ -114,10 +112,10 @@ const ChangePassword = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
+              <Form.Control
+                type="email"
                 name="email"
-                placeholder="Enter your email" 
+                placeholder="Enter your email"
                 value={resetData.email}
                 onChange={handleChange}
                 required
@@ -125,10 +123,10 @@ const ChangePassword = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Current Password</Form.Label>
-              <Form.Control 
-                type="password" 
+              <Form.Control
+                type="password"
                 name="oldPassword"
-                placeholder="Enter current password" 
+                placeholder="Enter current password"
                 value={resetData.oldPassword}
                 onChange={handleChange}
                 required
@@ -136,10 +134,10 @@ const ChangePassword = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>New Password</Form.Label>
-              <Form.Control 
-                type="password" 
+              <Form.Control
+                type="password"
                 name="newPassword"
-                placeholder="Enter new password" 
+                placeholder="Enter new password"
                 value={resetData.newPassword}
                 onChange={handleChange}
                 required
@@ -147,17 +145,17 @@ const ChangePassword = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Confirm New Password</Form.Label>
-              <Form.Control 
-                type="password" 
+              <Form.Control
+                type="password"
                 name="confirmPassword"
-                placeholder="Confirm new password" 
+                placeholder="Confirm new password"
                 value={resetData.confirmPassword}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
             <Button variant="success" type="submit" disabled={isLoading}>
-              {isLoading ? 'Updating...' : 'Update Password'}
+              {isLoading ? "Updating..." : "Update Password"}
             </Button>
           </Form>
         </Card.Body>

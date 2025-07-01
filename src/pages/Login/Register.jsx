@@ -2,8 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ColorInit from "../../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
 import HeaderOne from "../../components/HeaderOne";
@@ -13,8 +13,8 @@ import BottomFooter from "../../components/BottomFooter";
 const Registration = () => {
   const formik = useFormik({
     initialValues: {
-      firmName: "",    
-      mobile1: "", 
+      firmName: "",
+      mobile1: "",
       email: "",
       address: "",
       password: "",
@@ -34,15 +34,21 @@ const Registration = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(`https://backend-2-pbou.onrender.com/auth/register`, values);
+        const response = await axios.post(
+          `http://localhost:8080/auth/register`,
+          values
+        );
         console.log("Registration successful:", response.data);
         toast.success("Registration successful!");
         formik.resetForm();
       } catch (error) {
         console.error("Registration failed:", error.response?.data);
-        toast.error(error.response?.data?.message || "Registration failed. Please try again.");
+        toast.error(
+          error.response?.data?.message ||
+            "Registration failed. Please try again."
+        );
       }
-    }
+    },
   });
 
   return (
@@ -50,8 +56,11 @@ const Registration = () => {
       <ColorInit color={false} />
       <ScrollToTop smooth color="#299E60" />
       <HeaderOne category={true} />
-      
-      <div className="bg-success bg-opacity-10 py-5" style={{ minHeight: "calc(100vh - 120px)" }}>
+
+      <div
+        className="bg-success bg-opacity-10 py-5"
+        style={{ minHeight: "calc(100vh - 120px)" }}
+      >
         <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-md-8 col-lg-6">
@@ -69,7 +78,11 @@ const Registration = () => {
                       </label>
                       <input
                         type="text"
-                        className={`form-control rounded-1 ${formik.touched.firmName && formik.errors.firmName ? 'is-invalid' : ''}`}
+                        className={`form-control rounded-1 ${
+                          formik.touched.firmName && formik.errors.firmName
+                            ? "is-invalid"
+                            : ""
+                        }`}
                         id="firmName"
                         name="firmName"
                         onChange={formik.handleChange}
@@ -78,7 +91,9 @@ const Registration = () => {
                         placeholder="Enter your company name"
                       />
                       {formik.touched.firmName && formik.errors.firmName && (
-                        <div className="invalid-feedback">{formik.errors.firmName}</div>
+                        <div className="invalid-feedback">
+                          {formik.errors.firmName}
+                        </div>
                       )}
                     </div>
 
@@ -87,10 +102,16 @@ const Registration = () => {
                         Mobile Number <span className="text-danger">*</span>
                       </label>
                       <div className="input-group">
-                        <span className="input-group-text bg-light rounded-1">+91</span>
+                        <span className="input-group-text bg-light rounded-1">
+                          +91
+                        </span>
                         <input
                           type="text"
-                          className={`form-control rounded-1 ${formik.touched.mobile1 && formik.errors.mobile1 ? 'is-invalid' : ''}`}
+                          className={`form-control rounded-1 ${
+                            formik.touched.mobile1 && formik.errors.mobile1
+                              ? "is-invalid"
+                              : ""
+                          }`}
                           id="mobile1"
                           name="mobile1"
                           onChange={formik.handleChange}
@@ -101,7 +122,9 @@ const Registration = () => {
                         />
                       </div>
                       {formik.touched.mobile1 && formik.errors.mobile1 && (
-                        <div className="invalid-feedback d-block">{formik.errors.mobile1}</div>
+                        <div className="invalid-feedback d-block">
+                          {formik.errors.mobile1}
+                        </div>
                       )}
                     </div>
 
@@ -111,7 +134,11 @@ const Registration = () => {
                       </label>
                       <input
                         type="email"
-                        className={`form-control rounded-1 ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
+                        className={`form-control rounded-1 ${
+                          formik.touched.email && formik.errors.email
+                            ? "is-invalid"
+                            : ""
+                        }`}
                         id="email"
                         name="email"
                         onChange={formik.handleChange}
@@ -120,7 +147,9 @@ const Registration = () => {
                         placeholder="company@example.com"
                       />
                       {formik.touched.email && formik.errors.email && (
-                        <div className="invalid-feedback">{formik.errors.email}</div>
+                        <div className="invalid-feedback">
+                          {formik.errors.email}
+                        </div>
                       )}
                     </div>
 
@@ -129,7 +158,11 @@ const Registration = () => {
                         Address <span className="text-danger">*</span>
                       </label>
                       <textarea
-                        className={`form-control rounded-1 ${formik.touched.address && formik.errors.address ? 'is-invalid' : ''}`}
+                        className={`form-control rounded-1 ${
+                          formik.touched.address && formik.errors.address
+                            ? "is-invalid"
+                            : ""
+                        }`}
                         id="address"
                         name="address"
                         onChange={formik.handleChange}
@@ -139,7 +172,9 @@ const Registration = () => {
                         placeholder="Enter your address with pin code"
                       ></textarea>
                       {formik.touched.address && formik.errors.address && (
-                        <div className="invalid-feedback">{formik.errors.address}</div>
+                        <div className="invalid-feedback">
+                          {formik.errors.address}
+                        </div>
                       )}
                     </div>
 
@@ -149,7 +184,11 @@ const Registration = () => {
                       </label>
                       <input
                         type="password"
-                        className={`form-control rounded-1 ${formik.touched.password && formik.errors.password ? 'is-invalid' : ''}`}
+                        className={`form-control rounded-1 ${
+                          formik.touched.password && formik.errors.password
+                            ? "is-invalid"
+                            : ""
+                        }`}
                         id="password"
                         name="password"
                         onChange={formik.handleChange}
@@ -158,7 +197,9 @@ const Registration = () => {
                         placeholder="Create a password (min 6 characters)"
                       />
                       {formik.touched.password && formik.errors.password && (
-                        <div className="invalid-feedback">{formik.errors.password}</div>
+                        <div className="invalid-feedback">
+                          {formik.errors.password}
+                        </div>
                       )}
                     </div>
 
@@ -170,7 +211,11 @@ const Registration = () => {
                       >
                         {formik.isSubmitting ? (
                           <>
-                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
                             Registering...
                           </>
                         ) : (
@@ -181,7 +226,12 @@ const Registration = () => {
                   </form>
                 </div>
                 <div className="card-footer bg-light text-center py-3">
-                  <p className="mb-0">Already have an account? <a href="/login" className="text-success fw-bold">Login here</a></p>
+                  <p className="mb-0">
+                    Already have an account?{" "}
+                    <a href="/login" className="text-success fw-bold">
+                      Login here
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -189,8 +239,8 @@ const Registration = () => {
           <ToastContainer position="top-center" autoClose={3000} />
         </div>
       </div>
-      
-      <FooterOne/>
+
+      <FooterOne />
       <BottomFooter />
     </>
   );

@@ -23,9 +23,9 @@
 //   const fetchData = async () => {
 //     try {
 //       const [categoryRes, subCategoryRes, productRes] = await Promise.all([
-//         axios.get("https://backend-2-pbou.onrender.com/category"),
-//         axios.get("https://backend-2-pbou.onrender.com/subcategory"),
-//         axios.get("https://backend-2-pbou.onrender.com/product"),
+//         axios.get("http://localhost:8080/category"),
+//         axios.get("http://localhost:8080/subcategory"),
+//         axios.get("http://localhost:8080/product"),
 //       ]);
 
 //       setCategories(categoryRes.data);
@@ -285,8 +285,8 @@
 //                           <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
 //                             {subCategories
 //                               .filter(sub => {
-//                                 const parentId = sub.parentCategory && typeof sub.parentCategory === 'object' 
-//                                   ? sub.parentCategory._id 
+//                                 const parentId = sub.parentCategory && typeof sub.parentCategory === 'object'
+//                                   ? sub.parentCategory._id
 //                                   : sub.parentCategory;
 //                                 return parentId === cat._id;
 //                               })
@@ -396,15 +396,18 @@
 
 
 
+
 import React, { useEffect, useState } from "react";
 import $ from "jquery";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
+import Slider from "react-slick";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { queries } from "@testing-library/react";
 // import { setSearchProduct } from "../Redux/Slice/searchSlice";
 
-const HeaderOne = ({ onSearch ,setsearchProductData}) => {
+
+const HeaderOne = ({ onSearch, setsearchProductData }) => {
   const location = useLocation();
   const { categoryId, subCategoryId } = useParams();
   const { subCategory, parentCategory, categoryData } = location.state || {};
@@ -420,15 +423,18 @@ const HeaderOne = ({ onSearch ,setsearchProductData}) => {
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeCategory, setActiveCategory] = useState(false);
   const [activeIndexCat, setActiveIndexCat] = useState(null);
+  // const [searchQuery, setSearchQuery] = useState("");
+const [searchResults, setSearchResults] = useState([]);
+const [showPopup, setShowPopup] = useState(false);
 
 
   // Fetch all categories and subcategories
   const fetchData = async () => {
     try {
       const [categoryRes, subCategoryRes, productRes] = await Promise.all([
-        axios.get("https://backend-2-pbou.onrender.com/category"),
-        axios.get("https://backend-2-pbou.onrender.com/subcategory"),
-        axios.get("https://backend-2-pbou.onrender.com/product"),
+        axios.get("http://localhost:8080/category"),
+        axios.get("http://localhost:8080/subcategory"),
+        axios.get("http://localhost:8080/product"),
       ]);
 
       setCategories(categoryRes.data);
@@ -447,21 +453,34 @@ const HeaderOne = ({ onSearch ,setsearchProductData}) => {
     }
   };
 
+  // const searchquery = async () => {
+  //   try {
+  //     console.log(searchQuery, "search");
+  //     const response = await axios.get(
+  //       `http://localhost:8080/product/search?query=${searchQuery}`
+  //     );
+
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+
   const searchquery = async () => {
-    try {
-      console.log(searchQuery,"search")
-      const response = await axios.get(`https://backend-2-pbou.onrender.com/product/search?query=${searchQuery}`)
+  try {
+    console.log(searchQuery, "search");
+    const response = await axios.get(
+      `http://localhost:8080/product/search?query=${searchQuery}`
+    );
+    setSearchResults(response.data); // <-- store results
+    setShowPopup(true); // <-- open popup
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-      console.log(response);
-      
-    } catch (error) {
-      console.log(error);
-      
-    }
-  };
 
-
-  
   useEffect(() => {
     fetchData();
   }, []);
@@ -514,23 +533,56 @@ const HeaderOne = ({ onSearch ,setsearchProductData}) => {
         >
           <i className="ph ph-x" />
         </button>
-        <div className="container">
-          <div className="position-relative">
-            <input
-              type="text"
-              className="form-control py-16 px-24 text-xl rounded-[30px] pe-64 border-2 border-gray-200 focus:border-main-600 focus:ring-2 focus:ring-main-200"
-              placeholder="Search for a product or brand"
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            <button
-              type="submit"
-              className="w-48 h-48 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8 hover:bg-main-700 transition-colors"
+    <div className="container relative">
+  <div className="position-relative">
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      placeholder="Search..."
+      className="form-control py-16 px-24 text-xl rounded-[30px] pe-64 border-2 border-gray-200 focus:border-main-600 focus:ring-2 focus:ring-main-200"
+    />
+    <button
+      type="submit"
+      onClick={searchquery}
+      className="w-48 h-48 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8 hover:bg-main-700 transition-colors"
+    >
+      <i className="ph ph-magnifying-glass" />
+    </button>
+  </div>
+
+  {/* 🔍 Overlay Search Results */}
+  {searchResults.length > 0 && (
+    <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto">
+      <div className="p-4">
+        <p className="text-sm text-gray-500 mb-2">
+          Found {searchResults.length} results for "{searchQuery}"
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {searchResults.map((product) => (
+            <div
+              key={product._id}
+              className="bg-white border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
             >
-              <i className="ph ph-magnifying-glass" />
-            </button>
-          </div>
+              <div className="h-32 bg-gray-100 flex items-center justify-center p-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+              <div className="p-2">
+                <h3 className="text-base font-semibold">{product.name}</h3>
+                <p className="text-sm text-gray-600 truncate">{product.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
+    </div>
+  )}
+</div>
+
       </form>
 
       {/* Mobile Menu */}
@@ -610,7 +662,7 @@ const HeaderOne = ({ onSearch ,setsearchProductData}) => {
                     onChange={handleSearchChange}
                   />
                   <button
-                  onClick={searchquery}
+                    onClick={searchquery}
                     type="submit"
                     className="w-32 h-32 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8 hover:bg-main-700 transition-colors"
                   >
@@ -651,6 +703,81 @@ const HeaderOne = ({ onSearch ,setsearchProductData}) => {
           </nav>
         </div>
       </header>
+
+      {showPopup && (
+  <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg w-[90%] max-w-2xl max-h-[80%] overflow-y-auto relative">
+      <button
+        onClick={() => setShowPopup(false)}
+        className="absolute top-2 right-2 text-xl font-bold"
+      >
+        &times;
+      </button>
+      <h2 className="text-lg font-semibold mb-4">Search Results</h2>
+     {searchResults.length > 0 ? (
+  <div className="space-y-4">
+    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      Search Results ({searchResults.length})
+    </h2>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {searchResults.map((item, index) => (
+        <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+          {/* Product Image */}
+          <div className="h-48 bg-gray-100 flex items-center justify-center p-4">
+            <img 
+              src={item.images?.[0] || "/assets/images/default-product.png"} 
+              alt={item.name}
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>
+          
+          {/* Product Info */}
+          <div className="p-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+              {item.name}
+            </h3>
+            
+            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+              {item.description}
+            </p>
+            
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-lg font-bold text-main-600">
+                ₹{item.price?.toFixed(2) || "0.00"}
+              </span>
+              <span className="text-sm text-gray-500">
+                Stock: {item.stock || 0}
+              </span>
+            </div>
+            
+            <div className="flex space-x-2">
+              <button className="flex-1 bg-main-600 hover:bg-main-700 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center">
+                <i className="ph ph-shopping-cart mr-2"></i>
+                Add to Cart
+              </button>
+              <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-3 rounded-md transition-colors">
+                <i className="ph ph-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+) : (
+  <div className="text-center py-12">
+    <div className="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <i className="ph ph-magnifying-glass text-3xl text-gray-400"></i>
+    </div>
+    <h3 className="text-xl font-medium text-gray-700 mb-2">No results found</h3>
+    <p className="text-gray-500">Try different search terms or browse our categories</p>
+  </div>
+)}
+    </div>
+  </div>
+)}
+
 
       {/* Main Header */}
       <header

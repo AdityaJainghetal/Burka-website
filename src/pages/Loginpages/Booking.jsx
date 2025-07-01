@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { message } from "antd";
@@ -27,7 +25,7 @@
 
 //       try {
 //         setIsLoading(true);
-//         const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
+//         const response = await axios.get(`http://localhost:8080/paymentuser/payments/${userId}`);
 //         setPayments(response.data.data);
 //       } catch (error) {
 //         console.error("Error fetching payments:", error);
@@ -57,7 +55,7 @@
 //       message.loading({ content: 'Preparing invoice...', key: orderId, duration: 0 });
 
 //       const response = await axios.get(
-//         `https://backend-2-pbou.onrender.com/paymentuser/downloadinvoice/${orderId}`,
+//         `http://localhost:8080/paymentuser/downloadinvoice/${orderId}`,
 //         {
 //           responseType: 'blob',
 //         }
@@ -70,7 +68,7 @@
 //       link.setAttribute('download', `invoice_${orderId}.pdf`);
 //       document.body.appendChild(link);
 //       link.click();
-      
+
 //       // Cleanup
 //       setTimeout(() => {
 //         window.URL.revokeObjectURL(url);
@@ -80,12 +78,12 @@
 //       message.success({ content: 'Invoice downloaded!', key: orderId });
 //     } catch (error) {
 //       console.error('Download error:', error);
-      
+
 //       if (error.response?.status === 404) {
 //         message.error({ content: 'Invoice not found for this order', key: orderId });
 //       } else {
-//         message.error({ 
-//           content: error.message || 'Failed to download invoice', 
+//         message.error({
+//           content: error.message || 'Failed to download invoice',
 //           key: orderId
 //         });
 //       }
@@ -175,9 +173,6 @@
 
 // export default PaymentHistory;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
@@ -205,7 +200,9 @@ const PaymentHistory = () => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
+        const response = await axios.get(
+          `http://localhost:8080/paymentuser/payments/${userId}`
+        );
         setPayments(response.data.data);
       } catch (error) {
         console.error("Error fetching payments:", error);
@@ -231,44 +228,51 @@ const PaymentHistory = () => {
   // Download invoice
   const handleDownloadInvoice = async (orderId) => {
     try {
-      setDownloading(prev => ({ ...prev, [orderId]: true }));
-      message.loading({ content: 'Preparing invoice...', key: orderId, duration: 0 });
+      setDownloading((prev) => ({ ...prev, [orderId]: true }));
+      message.loading({
+        content: "Preparing invoice...",
+        key: orderId,
+        duration: 0,
+      });
 
       const response = await axios.get(
-        `https://backend-2-pbou.onrender.com/paymentuser/downloadinvoice/${orderId}`,
+        `http://localhost:8080/paymentuser/downloadinvoice/${orderId}`,
         {
-          responseType: 'blob',
+          responseType: "blob",
         }
       );
 
       // Create download link
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `invoice_${orderId}.pdf`);
+      link.setAttribute("download", `invoice_${orderId}.pdf`);
       document.body.appendChild(link);
       link.click();
-      
+
       // Cleanup
       setTimeout(() => {
         window.URL.revokeObjectURL(url);
         link.parentNode.removeChild(link);
       }, 100);
 
-      message.success({ content: 'Invoice downloaded!', key: orderId });
+      message.success({ content: "Invoice downloaded!", key: orderId });
     } catch (error) {
-      console.error('Download error:', error);
-      
+      console.error("Download error:", error);
+
       if (error.response?.status === 404) {
-        message.error({ content: 'Invoice not found for this order', key: orderId });
+        message.error({
+          content: "Invoice not found for this order",
+          key: orderId,
+        });
       } else {
-        message.error({ 
-          content: error.message || 'Failed to download invoice', 
-          key: orderId
+        message.error({
+          content: error.message || "Failed to download invoice",
+          key: orderId,
         });
       }
     } finally {
-      setDownloading(prev => ({ ...prev, [orderId]: false }));
+      setDownloading((prev) => ({ ...prev, [orderId]: false }));
     }
   };
 
@@ -293,14 +297,30 @@ const PaymentHistory = () => {
             <Table id="tabling" className="table align-middle border">
               <thead className="bg-gray-100 border">
                 <tr className="border">
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Product Name</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Order ID</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Date</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Amount</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Payment Mode</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Status</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Remark</th>
-                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">Action</th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Product Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Order ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Amount
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Payment Mode
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Remark
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm fw-bold text-gray-700">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -319,24 +339,45 @@ const PaymentHistory = () => {
                 ) : (
                   payments.map((payment) => (
                     <tr key={payment.orderId}>
-                      <td className="px-6 py-4 text-sm text-gray-800">{payment.productname}</td>
-                      <td className="px-6 py-4 text-sm text-gray-800">{payment.orderId}</td>
-                      <td className="px-6 py-4 text-sm text-gray-800">{formatDate(payment.receivingDate)}</td>
-                      <td className="px-6 py-4 text-sm text-gray-800">₹{payment.amount}</td>
-                      <td className="px-6 py-4 text-sm text-gray-800">{payment.paymentMode}</td>
-                      <td className={`px-6 py-4 text-sm ${payment?.status == "Completed" ? "text-green-600" : "text-red-600"}`}>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        {payment.productname}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        {payment.orderId}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        {formatDate(payment.receivingDate)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        ₹{payment.amount}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        {payment.paymentMode}
+                      </td>
+                      <td
+                        className={`px-6 py-4 text-sm ${
+                          payment?.status == "Completed"
+                            ? "text-green-600"
+                            : "text-red-600"
+                        }`}
+                      >
                         {payment?.status}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-800">{payment.remark || "-"}</td>
+                      <td className="px-6 py-4 text-sm text-gray-800">
+                        {payment.remark || "-"}
+                      </td>
                       <td className="px-6 py-4">
-                        <Button style={{backgroundColor:"green"}}
+                        <Button
+                          style={{ backgroundColor: "green" }}
                           variant="outline-primary"
                           size="sm"
                           className="border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg"
                           onClick={() => handleDownloadInvoice(payment.orderId)}
                           disabled={downloading[payment.orderId]}
                         >
-                          {downloading[payment.orderId] ? 'Downloading...' : 'Download Invoice'}
+                          {downloading[payment.orderId]
+                            ? "Downloading..."
+                            : "Download Invoice"}
                         </Button>
                       </td>
                     </tr>

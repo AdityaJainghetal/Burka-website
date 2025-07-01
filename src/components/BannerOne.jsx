@@ -3,10 +3,9 @@
 // import Slider from "react-slick";
 // import { ToastContainer, toast } from 'react-toastify';
 
-
 // const BannerOne = () => {
 //      const [banners, setBanners] = useState([]);
-//   const api = 'https://backend-2-pbou.onrender.com/banner/alldisplay';
+//   const api = 'http://localhost:8080/banner/alldisplay';
 
 //   // Load banners
 //   const loadData = async () => {
@@ -21,8 +20,6 @@
 //   useEffect(() => {
 //     loadData();
 //   }, []);
-
-
 
 //     function SampleNextArrow(props) {
 //         const { className, onClick } = props;
@@ -118,19 +115,17 @@
 
 // export default BannerOne;
 
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const BannerOne = () => {
   const [banners, setBanners] = useState([]);
-  const api = 'https://backend-2-pbou.onrender.com/banner/alldisplay';
+  const api = "http://localhost:8080/banner/alldisplay";
 
   // Load banners
   const loadData = async () => {
@@ -138,7 +133,7 @@ const BannerOne = () => {
       const response = await axios.get(api);
       setBanners(response.data);
     } catch (error) {
-      toast.error('Error fetching banners');
+      toast.error("Error fetching banners");
     }
   };
 
@@ -184,7 +179,7 @@ const BannerOne = () => {
     autoplay: banners.length > 1,
     autoplaySpeed: 3000,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />
+    prevArrow: <SamplePrevArrow />,
   };
 
   return (

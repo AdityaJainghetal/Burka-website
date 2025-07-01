@@ -24,6 +24,9 @@ const Layout = ({ children, activeTab, setActiveTab }) => {
   const handleLogut=()=>{
     localStorage.clear();
     navigate("/")
+    window.location.reload();
+
+    
   }
 
 

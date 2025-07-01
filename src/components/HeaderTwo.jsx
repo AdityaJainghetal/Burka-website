@@ -2241,9 +2241,6 @@
 
 // export default HeaderTwo;
 
-
-
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -2255,7 +2252,7 @@
 //   const [categories, setCategories] = useState([]);
 //   const [activeCategory, setActiveCategory] = useState('All');
 //   const navigate = useNavigate();
-//   const api = 'https://backend-2-pbou.onrender.com/product';
+//   const api = 'http://localhost:8080/product';
 
 //   // Fetch courses
 //   useEffect(() => {
@@ -2275,7 +2272,7 @@
 //   useEffect(() => {
 //     const fetchCategories = async () => {
 //       try {
-//         const res = await axios.get('https://backend-2-pbou.onrender.com/category');
+//         const res = await axios.get('http://localhost:8080/category');
 //         setCategories(res.data);
 //       } catch (error) {
 //         toast.error('Error fetching categories');
@@ -2550,7 +2547,6 @@
 
 // export default HeaderTwo;
 
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
@@ -2570,7 +2566,7 @@ const HeaderTwo = ({ category }) => {
   const [activeCatMenu, setActiveCatMenu] = useState(false);
   const [activeIndexCat, setActiveIndexCat] = useState(null);
 
-  const api = "https://backend-2-pbou.onrender.com/product";
+  const api = "http://localhost:8080/product";
 
   // Fetch courses
   useEffect(() => {
@@ -2590,7 +2586,7 @@ const HeaderTwo = ({ category }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("https://backend-2-pbou.onrender.com/category");
+        const res = await axios.get("http://localhost:8080/category");
         setCategories(res.data);
       } catch (error) {
         toast.error("Error fetching categories");
@@ -2623,20 +2619,25 @@ const HeaderTwo = ({ category }) => {
   // Handlers
   const handleLanguageChange = (language) => setSelectedLanguage(language);
   const handleCurrencyChange = (currency) => setSelectedCurrency(currency);
-  const handleMenuClick = (index) => setActiveIndex(activeIndex === index ? null : index);
+  const handleMenuClick = (index) =>
+    setActiveIndex(activeIndex === index ? null : index);
   const handleMenuToggle = () => setMenuActive(!menuActive);
   const handleSearchToggle = () => setActiveSearch(!activeSearch);
   const handleCategoryToggle = () => setActiveCatMenu(!activeCatMenu);
-  const handleCatClick = (index) => setActiveIndexCat(activeIndexCat === index ? null : index);
+  const handleCatClick = (index) =>
+    setActiveIndexCat(activeIndexCat === index ? null : index);
 
-  const filteredCourses = activeCategory === "All"
-    ? courses
-    : courses.filter((course) => course.category?.name === activeCategory);
+  const filteredCourses =
+    activeCategory === "All"
+      ? courses
+      : courses.filter((course) => course.category?.name === activeCategory);
 
   return (
     <>
       <div className="overlay" />
-      <div className={`side-overlay ${(menuActive || activeCatMenu) && "show"}`} />
+      <div
+        className={`side-overlay ${(menuActive || activeCatMenu) && "show"}`}
+      />
 
       {/* Search Box */}
       <form action="#" className={`search-box ${activeSearch && "active"}`}>
@@ -2665,7 +2666,11 @@ const HeaderTwo = ({ category }) => {
       </form>
 
       {/* Mobile Menu */}
-      <div className={`mobile-menu scroll-sm d-lg-none d-block ${menuActive && "active"}`}>
+      <div
+        className={`mobile-menu scroll-sm d-lg-none d-block ${
+          menuActive && "active"
+        }`}
+      >
         <button
           onClick={() => {
             handleMenuToggle();
@@ -2684,12 +2689,18 @@ const HeaderTwo = ({ category }) => {
             <ul className="nav-menu flex-align nav-menu--mobile">
               <li
                 onClick={() => handleMenuClick(0)}
-                className={`on-hover-item nav-menu__item has-submenu ${activeIndex === 0 ? "d-block" : ""}`}
+                className={`on-hover-item nav-menu__item has-submenu ${
+                  activeIndex === 0 ? "d-block" : ""
+                }`}
               >
                 <Link to="#" className="nav-menu__link">
                   Home
                 </Link>
-                <ul className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${activeIndex === 0 ? "open" : ""}`}>
+                <ul
+                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
+                    activeIndex === 0 ? "open" : ""
+                  }`}
+                >
                   <li className="common-dropdown__item nav-submenu__item">
                     <Link
                       onClick={() => setActiveIndex(null)}
@@ -2721,12 +2732,18 @@ const HeaderTwo = ({ category }) => {
               </li>
               <li
                 onClick={() => handleMenuClick(1)}
-                className={`on-hover-item nav-menu__item has-submenu ${activeIndex === 1 ? "d-block" : ""}`}
+                className={`on-hover-item nav-menu__item has-submenu ${
+                  activeIndex === 1 ? "d-block" : ""
+                }`}
               >
                 <Link to="#" className="nav-menu__link">
                   Shop
                 </Link>
-                <ul className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${activeIndex === 1 ? "open" : ""}`}>
+                <ul
+                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
+                    activeIndex === 1 ? "open" : ""
+                  }`}
+                >
                   <li className="common-dropdown__item nav-submenu__item">
                     <Link
                       onClick={() => setActiveIndex(null)}
@@ -2758,7 +2775,9 @@ const HeaderTwo = ({ category }) => {
               </li>
               <li
                 onClick={() => handleMenuClick(2)}
-                className={`on-hover-item nav-menu__item has-submenu ${activeIndex === 2 ? "d-block" : ""}`}
+                className={`on-hover-item nav-menu__item has-submenu ${
+                  activeIndex === 2 ? "d-block" : ""
+                }`}
               >
                 <span className="badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4">
                   New
@@ -2766,7 +2785,11 @@ const HeaderTwo = ({ category }) => {
                 <Link to="#" className="nav-menu__link">
                   Pages
                 </Link>
-                <ul className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${activeIndex === 2 ? "open" : ""}`}>
+                <ul
+                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
+                    activeIndex === 2 ? "open" : ""
+                  }`}
+                >
                   <li className="common-dropdown__item nav-submenu__item">
                     <Link
                       onClick={() => setActiveIndex(null)}
@@ -2816,7 +2839,9 @@ const HeaderTwo = ({ category }) => {
               </li>
               <li
                 onClick={() => handleMenuClick(3)}
-                className={`on-hover-item nav-menu__item has-submenu ${activeIndex === 3 ? "d-block" : ""}`}
+                className={`on-hover-item nav-menu__item has-submenu ${
+                  activeIndex === 3 ? "d-block" : ""
+                }`}
               >
                 <span className="badge-notification bg-tertiary-600 text-white text-sm py-2 px-8 rounded-4">
                   New
@@ -2824,7 +2849,11 @@ const HeaderTwo = ({ category }) => {
                 <Link to="#" className="nav-menu__link">
                   Vendors
                 </Link>
-                <ul className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${activeIndex === 3 ? "open" : ""}`}>
+                <ul
+                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
+                    activeIndex === 3 ? "open" : ""
+                  }`}
+                >
                   <li className="common-dropdown__item nav-submenu__item">
                     <Link
                       onClick={() => setActiveIndex(null)}
@@ -2865,12 +2894,18 @@ const HeaderTwo = ({ category }) => {
               </li>
               <li
                 onClick={() => handleMenuClick(4)}
-                className={`on-hover-item nav-menu__item has-submenu ${activeIndex === 4 ? "d-block" : ""}`}
+                className={`on-hover-item nav-menu__item has-submenu ${
+                  activeIndex === 4 ? "d-block" : ""
+                }`}
               >
                 <Link to="#" className="nav-menu__link">
                   Blog
                 </Link>
-                <ul className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${activeIndex === 4 ? "open" : ""}`}>
+                <ul
+                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
+                    activeIndex === 4 ? "open" : ""
+                  }`}
+                >
                   <li className="common-dropdown__item nav-submenu__item">
                     <Link
                       onClick={() => setActiveIndex(null)}
@@ -2914,7 +2949,10 @@ const HeaderTwo = ({ category }) => {
               <div className="select-dropdown-for-home-two d-lg-none d-block">
                 <ul className="header-top__right style-two flex-align flex-wrap">
                   <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                    <Link to="#" className="selected-text text-heading text-sm py-8">
+                    <Link
+                      to="#"
+                      className="selected-text text-heading text-sm py-8"
+                    >
                       {selectedLanguage}
                     </Link>
                     <ul className="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
@@ -3005,7 +3043,10 @@ const HeaderTwo = ({ category }) => {
                     </ul>
                   </li>
                   <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                    <Link to="#" className="selected-text text-heading text-sm py-8">
+                    <Link
+                      to="#"
+                      className="selected-text text-heading text-sm py-8"
+                    >
                       {selectedCurrency}
                     </Link>
                     <ul className="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
@@ -3097,7 +3138,10 @@ const HeaderTwo = ({ category }) => {
                   </li>
                 </ul>
               </div>
-              <form action="#" className="flex-align flex-wrap form-location-wrapper">
+              <form
+                action="#"
+                className="flex-align flex-wrap form-location-wrapper"
+              >
                 <div className="search-category style-two d-flex h-48 search-form d-sm-flex d-none">
                   <select
                     defaultValue="All"
@@ -3138,7 +3182,10 @@ const HeaderTwo = ({ category }) => {
                     <i className="ph ph-magnifying-glass" />
                   </span>
                 </button>
-                <Link to="/account" className="flex-align flex-column gap-8 item-hover-two">
+                <Link
+                  to="/account"
+                  className="flex-align flex-column gap-8 item-hover-two"
+                >
                   <span className="text-2xl text-white d-flex position-relative item-hover__text">
                     <i className="ph ph-user" />
                   </span>
@@ -3146,7 +3193,10 @@ const HeaderTwo = ({ category }) => {
                     Profile
                   </span>
                 </Link>
-                <Link to="/wishlist" className="flex-align flex-column gap-8 item-hover-two">
+                <Link
+                  to="/wishlist"
+                  className="flex-align flex-column gap-8 item-hover-two"
+                >
                   <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                     <i className="ph ph-heart" />
                     <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">
@@ -3157,7 +3207,10 @@ const HeaderTwo = ({ category }) => {
                     Wishlist
                   </span>
                 </Link>
-                <Link to="/cart" className="flex-align flex-column gap-8 item-hover-two">
+                <Link
+                  to="/cart"
+                  className="flex-align flex-column gap-8 item-hover-two"
+                >
                   <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                     <i className="ph-fill ph-shuffle" />
                     <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">
@@ -3168,7 +3221,10 @@ const HeaderTwo = ({ category }) => {
                     Compare
                   </span>
                 </Link>
-                <Link to="/cart" className="flex-align flex-column gap-8 item-hover-two">
+                <Link
+                  to="/cart"
+                  className="flex-align flex-column gap-8 item-hover-two"
+                >
                   <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                     <i className="ph ph-shopping-cart-simple" />
                     <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">
@@ -3186,12 +3242,20 @@ const HeaderTwo = ({ category }) => {
       </header>
 
       {/* Main Header */}
-      <header className={`header bg-white border-bottom border-gray-100 ${scroll && "fixed-header"}`}>
+      <header
+        className={`header bg-white border-bottom border-gray-100 ${
+          scroll && "fixed-header"
+        }`}
+      >
         <div className="container container-lg">
           <nav className="header-inner d-flex justify-content-between gap-8">
             <div className="flex-align menu-category-wrapper">
               {/* Mobile Category Dropdown */}
-              <div className={`category-two ${category === false ? "d-block" : "d-none"}`}>
+              <div
+                className={`category-two ${
+                  category === false ? "d-block" : "d-none"
+                }`}
+              >
                 <button
                   onClick={handleCategoryToggle}
                   type="button"
@@ -3206,7 +3270,9 @@ const HeaderTwo = ({ category }) => {
                   </span>
                 </button>
                 <div
-                  className={`responsive-dropdown cat common-dropdown d-lg-none d-block nav-submenu p-0 submenus-submenu-wrapper shadow-none border border-gray-100 ${activeCatMenu && "active"}`}
+                  className={`responsive-dropdown cat common-dropdown d-lg-none d-block nav-submenu p-0 submenus-submenu-wrapper shadow-none border border-gray-100 ${
+                    activeCatMenu && "active"
+                  }`}
                 >
                   <button
                     onClick={() => {
@@ -3228,7 +3294,9 @@ const HeaderTwo = ({ category }) => {
                       <li
                         key={cat._id}
                         onClick={() => handleCatClick(index)}
-                        className={`has-submenus-submenu ${activeIndexCat === index ? "active" : ""}`}
+                        className={`has-submenus-submenu ${
+                          activeIndexCat === index ? "active" : ""
+                        }`}
                       >
                         <Link
                           to="#"
@@ -3239,12 +3307,20 @@ const HeaderTwo = ({ category }) => {
                             <i className="ph ph-caret-right" />
                           </span>
                         </Link>
-                        <div className={`submenus-submenu py-16 ${activeIndexCat === index ? "open" : ""}`}>
-                          <h6 className="text-lg px-16 submenus-submenu__title">{cat.name}</h6>
+                        <div
+                          className={`submenus-submenu py-16 ${
+                            activeIndexCat === index ? "open" : ""
+                          }`}
+                        >
+                          <h6 className="text-lg px-16 submenus-submenu__title">
+                            {cat.name}
+                          </h6>
                           <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
                             {cat.subcategories?.map((subcat) => (
                               <li key={subcat._id}>
-                                <Link to={`/shop?category=${cat._id}&subcategory=${subcat._id}`}>
+                                <Link
+                                  to={`/shop?category=${cat._id}&subcategory=${subcat._id}`}
+                                >
                                   {subcat.name}
                                 </Link>
                               </li>
@@ -3258,7 +3334,11 @@ const HeaderTwo = ({ category }) => {
               </div>
 
               {/* Desktop Category Dropdown */}
-              <div className={`category main on-hover-item bg-main-600 text-white ${category === true ? "d-block" : "d-none"}`}>
+              <div
+                className={`category main on-hover-item bg-main-600 text-white ${
+                  category === true ? "d-block" : "d-none"
+                }`}
+              >
                 <button
                   type="button"
                   className="category__button flex-align gap-8 fw-medium p-16 border-end border-start border-gray-100 text-white"
@@ -3299,11 +3379,15 @@ const HeaderTwo = ({ category }) => {
                           </span>
                         </Link>
                         <div className="submenus-submenu py-16">
-                          <h6 className="text-lg px-16 submenus-submenu__title">{cat.name}</h6>
+                          <h6 className="text-lg px-16 submenus-submenu__title">
+                            {cat.name}
+                          </h6>
                           <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
                             {cat.subcategories?.map((subcat) => (
                               <li key={subcat._id}>
-                                <Link to={`/shop?category=${cat._id}&subcategory=${subcat._id}`}>
+                                <Link
+                                  to={`/shop?category=${cat._id}&subcategory=${subcat._id}`}
+                                >
                                   {subcat.name}
                                 </Link>
                               </li>
@@ -3568,7 +3652,9 @@ const HeaderTwo = ({ category }) => {
                     <NavLink
                       to="/contact"
                       className={(navData) =>
-                        navData.isActive ? "nav-menu__link activePage" : "nav-menu__link"
+                        navData.isActive
+                          ? "nav-menu__link activePage"
+                          : "nav-menu__link"
                       }
                     >
                       Contact Us
@@ -3583,7 +3669,10 @@ const HeaderTwo = ({ category }) => {
               <div className="select-dropdown-for-home-two d-lg-block d-none">
                 <ul className="header-top__right style-two flex-align flex-wrap">
                   <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                    <Link to="#" className="selected-text text-heading text-sm py-8">
+                    <Link
+                      to="#"
+                      className="selected-text text-heading text-sm py-8"
+                    >
                       {selectedLanguage}
                     </Link>
                     <ul className="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
@@ -3674,7 +3763,10 @@ const HeaderTwo = ({ category }) => {
                     </ul>
                   </li>
                   <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                    <Link to="#" className="selected-text text-heading text-sm py-8">
+                    <Link
+                      to="#"
+                      className="selected-text text-heading text-sm py-8"
+                    >
                       {selectedCurrency}
                     </Link>
                     <ul className="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
@@ -3777,7 +3869,10 @@ const HeaderTwo = ({ category }) => {
                       <i className="ph ph-magnifying-glass" />
                     </span>
                   </button>
-                  <Link to="/account" className="flex-align flex-column gap-8 item-hover-two">
+                  <Link
+                    to="/account"
+                    className="flex-align flex-column gap-8 item-hover-two"
+                  >
                     <span className="text-2xl text-white d-flex position-relative item-hover__text">
                       <i className="ph ph-user" />
                     </span>
@@ -3785,7 +3880,10 @@ const HeaderTwo = ({ category }) => {
                       Profile
                     </span>
                   </Link>
-                  <Link to="/wishlist" className="flex-align flex-column gap-8 item-hover-two">
+                  <Link
+                    to="/wishlist"
+                    className="flex-align flex-column gap-8 item-hover-two"
+                  >
                     <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                       <i className="ph ph-heart" />
                       <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">
@@ -3796,7 +3894,10 @@ const HeaderTwo = ({ category }) => {
                       Wishlist
                     </span>
                   </Link>
-                  <Link to="/cart" className="flex-align flex-column gap-8 item-hover-two">
+                  <Link
+                    to="/cart"
+                    className="flex-align flex-column gap-8 item-hover-two"
+                  >
                     <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                       <i className="ph-fill ph-shuffle" />
                       <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">
@@ -3807,7 +3908,10 @@ const HeaderTwo = ({ category }) => {
                       Compare
                     </span>
                   </Link>
-                  <Link to="/cart" className="flex-align flex-column gap-8 item-hover-two">
+                  <Link
+                    to="/cart"
+                    className="flex-align flex-column gap-8 item-hover-two"
+                  >
                     <span className="text-2xl text-white d-flex position-relative me-6 mt-6 item-hover__text">
                       <i className="ph ph-shopping-cart-simple" />
                       <span className="w-16 h-16 flex-center rounded-circle bg-main-two-600 text-white text-xs position-absolute top-n6 end-n4">

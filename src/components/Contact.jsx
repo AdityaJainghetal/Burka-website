@@ -1,8 +1,6 @@
-
-
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +8,7 @@ const Contact = () => {
     phone: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -38,7 +36,8 @@ const Contact = () => {
     if (!formData.phone) {
       newErrors.phone = "Phone number is required";
     } else if (!/^[\d\s+-]{10,}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid phone number (at least 10 digits)";
+      newErrors.phone =
+        "Please enter a valid phone number (at least 10 digits)";
     }
 
     // Message validation
@@ -54,16 +53,16 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -79,10 +78,13 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post("https://backend-2-pbou.onrender.com/contact/add", formData);
+      const response = await axios.post(
+        "http://localhost:8080/contact/add",
+        formData
+      );
       setSubmitStatus({
         success: true,
-        message: "Your message has been sent successfully!"
+        message: "Your message has been sent successfully!",
       });
 
       // Reset form after successful submission
@@ -91,7 +93,7 @@ const Contact = () => {
         phone: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -103,7 +105,7 @@ const Contact = () => {
 
       setSubmitStatus({
         success: false,
-        message: errorMessage
+        message: errorMessage,
       });
     } finally {
       setIsSubmitting(false);
@@ -119,7 +121,11 @@ const Contact = () => {
               <form onSubmit={handleSubmit}>
                 <h6 className="mb-32">Make Custom Request</h6>
                 {submitStatus && (
-                  <div className={`alert ${submitStatus.success ? 'alert-success' : 'alert-danger'} mb-32`}>
+                  <div
+                    className={`alert ${
+                      submitStatus.success ? "alert-success" : "alert-danger"
+                    } mb-32`}
+                  >
                     {submitStatus.message}
                   </div>
                 )}
@@ -130,11 +136,15 @@ const Contact = () => {
                       className="flex-align gap-4 text-sm font-heading-two text-gray-900 fw-semibold mb-4"
                     >
                       Full Name{" "}
-                      <span className="text-danger text-xl line-height-1">*</span>{" "}
+                      <span className="text-danger text-xl line-height-1">
+                        *
+                      </span>{" "}
                     </label>
                     <input
                       type="text"
-                      className={`common-input px-16 ${errors.name ? 'border-danger' : ''}`}
+                      className={`common-input px-16 ${
+                        errors.name ? "border-danger" : ""
+                      }`}
                       id="name"
                       name="name"
                       placeholder="Full name"
@@ -142,7 +152,9 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {errors.name && (
-                      <div className="text-danger text-xs mt-1">{errors.name}</div>
+                      <div className="text-danger text-xs mt-1">
+                        {errors.name}
+                      </div>
                     )}
                   </div>
                   <div className="col-sm-6 col-xs-6">
@@ -151,11 +163,15 @@ const Contact = () => {
                       className="flex-align gap-4 text-sm font-heading-two text-gray-900 fw-semibold mb-4"
                     >
                       Email Address{" "}
-                      <span className="text-danger text-xl line-height-1">*</span>{" "}
+                      <span className="text-danger text-xl line-height-1">
+                        *
+                      </span>{" "}
                     </label>
                     <input
                       type="email"
-                      className={`common-input px-16 ${errors.email ? 'border-danger' : ''}`}
+                      className={`common-input px-16 ${
+                        errors.email ? "border-danger" : ""
+                      }`}
                       id="email"
                       name="email"
                       placeholder="email address"
@@ -163,7 +179,9 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {errors.email && (
-                      <div className="text-danger text-xs mt-1">{errors.email}</div>
+                      <div className="text-danger text-xs mt-1">
+                        {errors.email}
+                      </div>
                     )}
                   </div>
                   <div className="col-sm-6 col-xs-6">
@@ -172,11 +190,15 @@ const Contact = () => {
                       className="flex-align gap-4 text-sm font-heading-two text-gray-900 fw-semibold mb-4"
                     >
                       Phone Number
-                      <span className="text-danger text-xl line-height-1">*</span>{" "}
+                      <span className="text-danger text-xl line-height-1">
+                        *
+                      </span>{" "}
                     </label>
                     <input
                       type="tel"
-                      className={`common-input px-16 ${errors.phone ? 'border-danger' : ''}`}
+                      className={`common-input px-16 ${
+                        errors.phone ? "border-danger" : ""
+                      }`}
                       id="phone"
                       name="phone"
                       placeholder="Phone Number*"
@@ -184,7 +206,9 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {errors.phone && (
-                      <div className="text-danger text-xs mt-1">{errors.phone}</div>
+                      <div className="text-danger text-xs mt-1">
+                        {errors.phone}
+                      </div>
                     )}
                   </div>
                   <div className="col-sm-6 col-xs-6">
@@ -193,7 +217,9 @@ const Contact = () => {
                       className="flex-align gap-4 text-sm font-heading-two text-gray-900 fw-semibold mb-4"
                     >
                       Subject
-                      <span className="text-danger text-xl line-height-1">*</span>{" "}
+                      <span className="text-danger text-xl line-height-1">
+                        *
+                      </span>{" "}
                     </label>
                     <input
                       type="text"
@@ -211,10 +237,14 @@ const Contact = () => {
                       className="flex-align gap-4 text-sm font-heading-two text-gray-900 fw-semibold mb-4"
                     >
                       Message
-                      <span className="text-danger text-xl line-height-1">*</span>{" "}
+                      <span className="text-danger text-xl line-height-1">
+                        *
+                      </span>{" "}
                     </label>
                     <textarea
-                      className={`common-input px-16 ${errors.message ? 'border-danger' : ''}`}
+                      className={`common-input px-16 ${
+                        errors.message ? "border-danger" : ""
+                      }`}
                       id="message"
                       name="message"
                       placeholder="Type your message"
@@ -223,7 +253,9 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {errors.message && (
-                      <div className="text-danger text-xs mt-1">{errors.message}</div>
+                      <div className="text-danger text-xs mt-1">
+                        {errors.message}
+                      </div>
                     )}
                   </div>
                   <div className="col-sm-12 mt-32">
@@ -234,11 +266,15 @@ const Contact = () => {
                     >
                       {isSubmitting ? (
                         <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          <span
+                            className="spinner-border spinner-border-sm me-2"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
                           Sending...
                         </>
                       ) : (
-                        'Get a Quote'
+                        "Get a Quote"
                       )}
                     </button>
                   </div>
@@ -276,19 +312,14 @@ const Contact = () => {
                   <i className="ph-fill ph-map-pin" />
                 </span>
                 <span className="text-md text-gray-900">
-                   3rd Floor,2170,Matia Mahal
-                                Kalyan Pura ,  Main Bazar,
-                                Turkman Gate, <br /> Nera Masid
-                                Dlehi-110006
-                                GSTIN/UIN: 07AMVPU7646P1ZM <br />
-                                State Name : Delhi, Code : 07
+                  3rd Floor,2170,Matia Mahal Kalyan Pura , Main Bazar, Turkman
+                  Gate, <br /> Nera Masid Dlehi-110006 GSTIN/UIN:
+                  07AMVPU7646P1ZM <br />
+                  State Name : Delhi, Code : 07
                 </span>
               </div>
             </div>
-            <div className="mt-24 flex-align flex-wrap gap-16">
-            
-             
-            </div>
+            <div className="mt-24 flex-align flex-wrap gap-16"></div>
           </div>
         </div>
       </div>

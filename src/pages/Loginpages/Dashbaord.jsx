@@ -1,6 +1,3 @@
-
-
-
 // import React from 'react';
 // import { Row, Col, Card, Button } from 'react-bootstrap';
 // import { Calendar, Cart, Person, GeoAlt, Gear } from 'react-bootstrap-icons';
@@ -10,7 +7,7 @@
 //   const productLength = Product.length;
 //  const [payments, setPayments] = useState([]);
 //   const [isLoading, setIsLoading] = useState(false);
-  
+
 //   const navigate = useNavigate();
 
 //   // Fetch userId from localStorage
@@ -28,7 +25,7 @@
 
 //       try {
 //         setIsLoading(true);
-//         const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
+//         const response = await axios.get(`http://localhost:8080/paymentuser/payments/${userId}`);
 //         setPayments(response.data.data);
 //       } catch (error) {
 //         console.error("Error fetching payments:", error);
@@ -42,8 +39,6 @@
 //     fetchPayments();
 //   }, [userId, navigate]);
 
-
-  
 //   return (
 //     <div className='ms-12 '>
 //       <div>
@@ -141,11 +136,9 @@
 
 // export default Dashboard;
 
-
-
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button } from 'react-bootstrap';
-import { Calendar, Cart, Person, GeoAlt, Gear } from 'react-bootstrap-icons';
+import React, { useState, useEffect } from "react";
+import { Row, Col, Card, Button } from "react-bootstrap";
+import { Calendar, Cart, Person, GeoAlt, Gear } from "react-bootstrap-icons";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -174,7 +167,9 @@ const Dashboard = ({ user }) => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`https://backend-2-pbou.onrender.com/paymentuser/payments/${userId}`);
+        const response = await axios.get(
+          `http://localhost:8080/paymentuser/payments/${userId}`
+        );
         setPayments(response.data.data);
       } catch (error) {
         console.error("Error fetching payments:", error);
@@ -189,7 +184,7 @@ const Dashboard = ({ user }) => {
   }, [userId, navigate]);
 
   return (
-    <div className='ms-12 '>
+    <div className="ms-12 ">
       <div>
         <h3 class="account-details-heading">Dashboard Overview</h3>
       </div>
@@ -218,7 +213,9 @@ const Dashboard = ({ user }) => {
                 </div>
                 <div>
                   <h6 className="mb-1">Cart Items</h6>
-                  <h4 className="mb-0">{productLength > 0 ? productLength : 0}</h4>
+                  <h4 className="mb-0">
+                    {productLength > 0 ? productLength : 0}
+                  </h4>
                 </div>
               </div>
             </Card.Body>
@@ -244,9 +241,7 @@ const Dashboard = ({ user }) => {
         <Card.Body>
           <h5 className="mb-3">Welcome back</h5>
           <hr />
-          <Row>
-            {/* Additional content can be added here */}
-          </Row>
+          <Row>{/* Additional content can be added here */}</Row>
         </Card.Body>
       </Card>
     </div>
